@@ -9,6 +9,7 @@ class GastoRepository:
     def obtener_todos(self):
         return self.gastos
 
+
     def obtener_por_uuid(self, gasto_uuid):
         for gasto in self.gastos:
             if gasto.uuid == gasto_uuid:
@@ -17,6 +18,9 @@ class GastoRepository:
 
     def obtener_por_categoria(self, categoria_uuid):
         return [g for g in self.gastos if g.categoria_uuid == categoria_uuid]
+
+    def eliminar_por_categoria(self, categoria_uuid):
+        self.gastos = [g for g in self.gastos if g.categoria_uuid != categoria_uuid]
 
     def eliminar(self, gasto_uuid):
         gasto = self.obtener_por_uuid(gasto_uuid)

@@ -8,7 +8,7 @@ def main():
     categoria_repository = CategoriaRepository()
     gasto_repository = GastoRepository()
 
-    categoria_service = CategoriaService(categoria_repository)
+    categoria_service = CategoriaService(categoria_repository, gasto_repository)
     gasto_service = GastoService(gasto_repository, categoria_repository)
 
     app = AppWindow(categoria_service, gasto_service)
