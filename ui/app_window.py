@@ -9,11 +9,19 @@ class AppWindow(tk.Tk):
         self.title("Control de Gastos Personales")
         self.geometry("700x500")
 
-        notebook = ttk.Notebook(self)
-        notebook.pack(fill="both", expand=True, padx=10, pady=10)
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(fill="both", expand=True, padx=10, pady=10)
 
-        panel_categorias = CategoriaPanel(notebook, categoria_service)
-        panel_gastos = GastoPanel(notebook, gasto_service, categoria_service)
+        self.panel_categorias = CategoriaPanel(self.notebook, categoria_service)
+        self.panel_gastos = GastoPanel(self.notebook, gasto_service, categoria_service)
 
-        notebook.add(panel_categorias, text="Categorías")
-        notebook.add(panel_gastos, text="Gastos")
+        self.notebook.add(self.panel_categorias, text="Categorías")
+        self.notebook.add(self.panel_gastos, text="Gastos")
+
+        self.notebook.bind("<<NotebookTabChanged>>", self._on_tab_changed)
+
+    def _on_tab_changed(self, event):
+        pestaña_actual = self.notebook.select()
+        if pestaña_actual == str(self.panel_gastos):
+            self.panel_gastos._cargar_categorias_combobox()
+            self.panel_gastos._cargar_gastos()
